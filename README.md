@@ -192,8 +192,8 @@ Add screenshots of the interface here.
 Example:
 
 ```
-screenshots/interface.png
-screenshots/prediction.png
+screenshots/img.png
+screenshots/img_1.png
 ```
 
 Markdown example:
