@@ -1,19 +1,35 @@
-# 🧠 Projet #17 — Reconnaissance d'objets CIFAR-10 (CNN Profond)
+# 🧠 CIFAR-10 Object Recognition with Deep CNN
 
-## 📁 Structure du projet
+This project implements a **Deep Convolutional Neural Network (CNN)** to classify images from the **CIFAR-10 dataset** into 10 object categories.
+
+The repository demonstrates a **complete deep-learning pipeline**, including:
+
+* Data exploration
+* Data augmentation
+* CNN model design
+* Model training
+* Model evaluation
+* Image prediction via CLI
+* A **Flask web interface** for real-time predictions
+
+Dataset: **CIFAR-10 (60,000 images, 10 classes, 32×32 RGB)**
+
+---
+
+# 📁 Project Structure
 
 ```
 cifar10_cnn/
-├── step1_data.py          # Étape 1 : Chargement & exploration des données
-├── step2_augmentation.py  # Étape 2 : Augmentation de données
-├── step3_model.py         # Étape 3 : Architecture CNN
-├── step4_train.py         # Étape 4 : Entraînement complet
-├── step5_evaluate.py      # Étape 5 : Évaluation & visualisations
-├── step6_predict.py       # Étape 6 : Prédiction CLI sur une image
-├── app.py                 # Serveur Flask (API + interface web)
-├── app_ui.html            # Interface web de démonstration
+├── step1_data.py          # Step 1: Data loading & exploration
+├── step2_augmentation.py  # Step 2: Data augmentation
+├── step3_model.py         # Step 3: CNN architecture
+├── step4_train.py         # Step 4: Model training
+├── step5_evaluate.py      # Step 5: Evaluation & visualizations
+├── step6_predict.py       # Step 6: CLI image prediction
+├── app.py                 # Flask server (API + Web interface)
+├── app_ui.html            # Web interface
 ├── requirements.txt
-└── outputs/               # (créé automatiquement)
+└── outputs/
     ├── best_model.keras
     ├── final_model.keras
     ├── training_curves.png
@@ -24,122 +40,230 @@ cifar10_cnn/
 
 ---
 
-## 🚀 Guide d'exécution étape par étape
+# ⚙️ Installation
 
-### Prérequis
+Clone the repository and install the dependencies.
+
 ```bash
+git clone https://github.com/yourusername/cifar10_cnn.git
+cd cifar10_cnn
 pip install -r requirements.txt
 ```
 
 ---
 
-### ÉTAPE 1 — Chargement & visualisation des données
+# 🚀 Step-by-Step Execution
+
+## Step 1 — Data Exploration
+
+Load the CIFAR-10 dataset and visualize samples.
+
 ```bash
 python step1_data.py
 ```
-**Sorties :**
-- `outputs/cifar10_samples.png` — Grille d'exemples par classe
-- `outputs/class_distribution.png` — Distribution équilibrée des classes
+
+Outputs:
+
+* `outputs/cifar10_samples.png`
+* `outputs/class_distribution.png`
 
 ---
 
-### ÉTAPE 2 — Augmentation de données
+## Step 2 — Data Augmentation
+
+Generate augmented versions of training images.
+
 ```bash
 python step2_augmentation.py
 ```
-**Sorties :**
-- `outputs/augmentation_examples.png` — Variantes augmentées d'images
+
+Outputs:
+
+* `outputs/augmentation_examples.png`
 
 ---
 
-### ÉTAPE 3 — Architecture du modèle
+## Step 3 — CNN Model Architecture
+
+Build the convolutional neural network.
+
 ```bash
 python step3_model.py
 ```
-**Sorties :**
-- Résumé du modèle dans la console (`model.summary()`)
-- `outputs/model_architecture.png` — Diagramme de l'architecture
-- Nombre de paramètres : ~1.2 million
+
+Outputs:
+
+* Model summary in the console
+* `outputs/model_architecture.png`
+
+Approximate parameters: **~1.2 million**
 
 ---
 
-### ÉTAPE 4 — Entraînement ⏱️
+## Step 4 — Model Training
+
+Train the CNN model.
+
 ```bash
 python step4_train.py
 ```
-> ⚠️ **Durée :** ~5-10 min/époque sur CPU, ~30-60 sec/époque sur GPU  
-> 💡 **Recommandé :** Google Colab (GPU T4 gratuit) ou Kaggle Notebooks
 
-**Sorties :**
-- `outputs/best_model.keras` — Meilleur modèle (checkpoint)
-- `outputs/final_model.keras` — Modèle final
-- `outputs/training_curves.png` — Courbes loss/accuracy
+Training time:
+
+* CPU → ~5–10 minutes per epoch
+* GPU → ~30–60 seconds per epoch
+
+Outputs:
+
+* `outputs/best_model.keras`
+* `outputs/final_model.keras`
+* `outputs/training_curves.png`
 
 ---
 
-### ÉTAPE 5 — Évaluation complète
+## Step 5 — Model Evaluation
+
+Evaluate the trained model on the test dataset.
+
 ```bash
 python step5_evaluate.py
 ```
-**Sorties :**
-- Score Test Accuracy (~82-88%)
-- Rapport de classification par classe
-- `outputs/confusion_matrix.png` — Matrice de confusion (brute + normalisée)
-- `outputs/per_class_accuracy.png` — Accuracy par classe
-- `outputs/wrong_predictions.png` — Exemples mal classifiés
+
+Outputs:
+
+* Test accuracy
+* Classification report
+* `outputs/confusion_matrix.png`
+* `outputs/per_class_accuracy.png`
+* `outputs/wrong_predictions.png`
 
 ---
 
-### ÉTAPE 6 — Prédiction sur une image (CLI) 🔍
-```bash
-# Prédire sur une image
-python step6_predict.py --image mon_image.jpg
+## Step 6 — Image Prediction (CLI)
 
-# Afficher les top 3 classes
-python step6_predict.py --image mon_image.jpg --top 3
+Predict the class of a custom image.
+
+```bash
+python step6_predict.py --image my_image.jpg
 ```
-**Sorties :**
-- Résultat console avec barre de confiance
-- `outputs/prediction_result.png` — Visualisation complète
+
+Top-3 predictions:
+
+```bash
+python step6_predict.py --image my_image.jpg --top 3
+```
+
+Outputs:
+
+* Prediction results in the console
+* `outputs/prediction_result.png`
 
 ---
 
-### ÉTAPE 7 — Interface Web 🌐
+# 🌐 Web Interface
+
+The project includes a **Flask web interface** that allows users to upload an image and receive predictions instantly.
+
+Run the server:
+
 ```bash
-# Installer Flask
 pip install flask flask-cors
-
-# Lancer le serveur
 python app.py
+```
 
-# Ouvrir dans le navigateur
+Open in your browser:
+
+```
 http://localhost:5000
 ```
-L'interface permet d'uploader une image et voir la prédiction en temps réel avec toutes les probabilités.
+
+The interface allows:
+
+* Image upload
+* Real-time prediction
+* Display of class probabilities
 
 ---
 
-## 📊 Résultats attendus
+# 📷 Interface Preview
 
-| Métrique | Valeur |
-|---|---|
-| Test Accuracy | 82 – 88 % |
-| Test Loss | 0.45 – 0.60 |
-| Paramètres totaux | ~1.2 million |
-| Époques effectives | 50 – 80 |
+Add screenshots of the interface here.
 
-## 🔧 Architecture CNN
+Example:
+
+```
+screenshots/interface.png
+screenshots/prediction.png
+```
+
+Markdown example:
+
+```
+![Web Interface](screenshots/interface.png)
+
+![Prediction Result](screenshots/prediction.png)
+```
+
+---
+
+# 📊 Expected Results
+
+| Metric           | Value        |
+| ---------------- | ------------ |
+| Test Accuracy    | 82 – 88 %    |
+| Test Loss        | 0.45 – 0.60  |
+| Total Parameters | ~1.2 million |
+| Training Epochs  | 50 – 80      |
+
+---
+
+# 🧩 CNN Architecture
 
 ```
 Input (32×32×3)
-  ↓
-[Conv2D(32) → BN → ReLU] × 2 → MaxPool → Dropout(0.25)
-  ↓
-[Conv2D(64) → BN → ReLU] × 2 → MaxPool → Dropout(0.35)
-  ↓
-[Conv2D(128) → BN → ReLU] × 2 → MaxPool → Dropout(0.45)
-  ↓
+↓
+[Conv2D(32) → BN → ReLU] ×2 → MaxPool → Dropout(0.25)
+↓
+[Conv2D(64) → BN → ReLU] ×2 → MaxPool → Dropout(0.35)
+↓
+[Conv2D(128) → BN → ReLU] ×2 → MaxPool → Dropout(0.45)
+↓
 Flatten → Dense(256) → BN → ReLU → Dropout(0.5)
-  ↓
+↓
 Dense(10) → Softmax
 ```
+
+---
+
+# 🏷️ CIFAR-10 Classes
+
+```
+airplane
+automobile
+bird
+cat
+deer
+dog
+frog
+horse
+ship
+truck
+```
+
+---
+
+# 📚 Technologies Used
+
+* Python
+* TensorFlow / Keras
+* NumPy
+* Matplotlib
+* Flask
+
+---
+
+# 📌 Project Goal
+
+The goal of this project is to demonstrate the **complete workflow of building a deep learning image classification system**, from dataset exploration to deployment through a simple web interface.
+
+This project can be used for **learning, experimentation, or as a portfolio deep-learning project**.
